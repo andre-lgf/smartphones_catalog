@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_23_013343) do
+ActiveRecord::Schema.define(version: 2021_11_23_164426) do
 
   create_table "announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "price"
@@ -33,6 +33,19 @@ ActiveRecord::Schema.define(version: 2021_11_23_013343) do
     t.string "name"
   end
 
+  create_table "csv_announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "csv_id"
+    t.bigint "announcement_id"
+    t.index ["announcement_id"], name: "index_csv_announcements_on_announcement_id"
+    t.index ["csv_id"], name: "index_csv_announcements_on_csv_id"
+  end
+
+  create_table "csvs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "devices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "brand_id"
@@ -46,5 +59,7 @@ ActiveRecord::Schema.define(version: 2021_11_23_013343) do
   add_foreign_key "announcements", "colors"
   add_foreign_key "announcements", "devices"
   add_foreign_key "announcements", "plans"
+  add_foreign_key "csv_announcements", "announcements"
+  add_foreign_key "csv_announcements", "csvs"
   add_foreign_key "devices", "brands"
 end
