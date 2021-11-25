@@ -12,16 +12,28 @@ module Services
 
       private
 
-      attr_reader :record_list
+      attr_reader :record_list, :csv_id
 
       def announcements
-        record_list.map { |row| 
-          parsed_record = ::Services::Announcements::Parser.new(row).call
-          Database::Announcements::Announcement.find_or_create_by(parsed_record)
+        record_list.map { |row| register_announcement(row) }
+      end
 
-          parsed_record
+      def register_announcement(record)
+        parsed_record = ::Services::Announcements::Parser.new(record).call
+        database_record = Database::Announcements::Announcement.find_or_create_by(parsed_record)
+
+        params = csv_announcement_params(database_record.id)
+        Database::Csvs::CsvAnnouncements.find_or_create_by(params)
+
+        parsed_record
+      end
+
+      def csv_announcement_params(record_id)
+        {
+          csv_id: csv_id,
+          announcement_id: record_id
         }
-      end   
+      end
     end
   end
 end
