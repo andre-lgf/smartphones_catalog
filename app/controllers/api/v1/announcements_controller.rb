@@ -1,8 +1,14 @@
 module Api
   module V1
     class AnnouncementsController < ApplicationController
+      before_action :set_csv, only: [:index]
+
       def index
-        render json: Database::Announcements::Announcement.all
+        if @csv
+          render json: @csv.announcements
+        else
+          render json: Database::Announcements::Announcement.all
+        end
       end
 
       def show
@@ -23,6 +29,12 @@ module Api
 
       def announcement_params
         params.require(:announcement).permit(:id, :device_color_id, :plan_id, :price, :amount)
+      end
+
+      def set_csv
+        return unless params[:csv_id].present?
+
+        @csv = Database::Csvs::Csv.find(params[:csv_id])
       end
     end
   end

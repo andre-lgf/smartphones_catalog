@@ -1,15 +1,15 @@
 module Api
   module V1
     class DevicesController < ApplicationController
-      before_action :set_brand, except: [:list]
+      before_action :set_brand
       before_action :find_device, only: [:show]
 
       def index
-        render json: @brand.devices
-      end
-
-      def list
-        render json: Database::Brands::Device.all
+        if @brand
+          render json: @brand.devices
+        else
+          render json: Database::Brands::Device.all
+        end
       end
 
       def show
@@ -37,6 +37,8 @@ module Api
       end
 
       def set_brand
+        return unless params[:brand_id].present?
+        
         @brand = Database::Brands::Brand.find(params[:brand_id])
       end
     end

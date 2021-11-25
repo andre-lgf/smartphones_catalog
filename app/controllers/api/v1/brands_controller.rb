@@ -1,12 +1,14 @@
 module Api
   module V1
     class BrandsController < ApplicationController
+      before_action :find_brand, only: [:show]
+
       def index
         render json: Database::Brands::Brand.all
       end
 
       def show
-        render json: Database::Brands::Brand.find(params[:id])
+        render json: @brand
       end
 
       def create
@@ -23,6 +25,10 @@ module Api
       
       def brand_params
         params.require(:brand).permit(:name, :id)
+      end
+
+      def find_brand
+        @brand = Database::Brands::Brand.find(params[:id])
       end
     end
   end

@@ -7,11 +7,14 @@ Rails.application.routes.draw do
         resources :devices, only: [:index, :show, :create]
       end
 
+      resources :csvs, only: [:index, :show, :create] do
+        resources :announcements, only: [:index]
+      end
+
       resources :colors, only: [:index, :show, :create]
       resources :plans, only: [:index, :show, :create]
-      resources :csvs, only: [:index, :show, :create]
 
-      get "/devices" => "devices#list"
+      resources :devices, only: [:index]
     end
   end
 end
