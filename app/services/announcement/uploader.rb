@@ -22,10 +22,14 @@ module Services
         parsed_record = ::Services::Announcements::Parser.new(record).call
         database_record = Database::Announcements::Announcement.find_or_create_by(parsed_record)
 
-        params = csv_announcement_params(database_record.id)
-        Database::Csvs::CsvAnnouncements.find_or_create_by(params)
+        build_csv_announcement(database_record.id) if @csv_id.present?
 
         parsed_record
+      end
+
+      def build_csv_announcement(id)
+        params = csv_announcement_params(id)
+        Database::Csvs::CsvAnnouncements.find_or_create_by(params)
       end
 
       def csv_announcement_params(record_id)
