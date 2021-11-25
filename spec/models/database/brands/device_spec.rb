@@ -18,11 +18,10 @@ RSpec.describe Database::Brands::Device do
   end
 
   context "when given mandatory fields values" do
-    let(:brand_data) { { id: 2, name: 'Morotola' } }
+    let(:brand_data) { FactoryBot.create(:brand) }
     let(:fields) { { brand_id: brand_data[:id] } }
 
     before do
-      Database::Brands::Brand.create(brand_data)
       described_class.create(**fields)
     end
 

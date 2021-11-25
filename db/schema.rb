@@ -15,13 +15,11 @@ ActiveRecord::Schema.define(version: 2021_11_23_164426) do
   create_table "announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "price"
     t.integer "amount"
-    t.bigint "device_id"
-    t.bigint "color_id"
+    t.bigint "device_color_id"
     t.bigint "plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["color_id"], name: "index_announcements_on_color_id"
-    t.index ["device_id"], name: "index_announcements_on_device_id"
+    t.index ["device_color_id"], name: "index_announcements_on_device_color_id"
     t.index ["plan_id"], name: "index_announcements_on_plan_id"
   end
 
@@ -46,6 +44,13 @@ ActiveRecord::Schema.define(version: 2021_11_23_164426) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "device_colors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "device_id"
+    t.bigint "color_id"
+    t.index ["color_id"], name: "index_device_colors_on_color_id"
+    t.index ["device_id"], name: "index_device_colors_on_device_id"
+  end
+
   create_table "devices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "brand_id"
@@ -56,10 +61,11 @@ ActiveRecord::Schema.define(version: 2021_11_23_164426) do
     t.string "name"
   end
 
-  add_foreign_key "announcements", "colors"
-  add_foreign_key "announcements", "devices"
+  add_foreign_key "announcements", "device_colors"
   add_foreign_key "announcements", "plans"
   add_foreign_key "csv_announcements", "announcements"
   add_foreign_key "csv_announcements", "csvs"
+  add_foreign_key "device_colors", "colors"
+  add_foreign_key "device_colors", "devices"
   add_foreign_key "devices", "brands"
 end
