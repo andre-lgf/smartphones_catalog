@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       resources :colors, only: [:index, :show, :create]
       resources :plans, only: [:index, :show, :create]
       resources :csvs, only: [:index, :show, :create]
+
+      get "/devices" => "devices#list"
     end
   end
 end

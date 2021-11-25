@@ -1,7 +1,7 @@
 module Api
   module V1
     class DevicesController < ApplicationController
-      before_action :set_brand
+      before_action :set_brand, except: [:list]
       before_action :find_device, only: [:show]
 
       def index
