@@ -17,5 +17,10 @@ Rails.application.routes.draw do
       resources :devices, only: [:index]
     end
   end
+
+  scope module: :web do
+    resources :announcements, only: [:index]
+    resources :csvs, only: [:index, :create]
+  end
 end
 
