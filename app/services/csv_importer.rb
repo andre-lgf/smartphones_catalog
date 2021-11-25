@@ -3,6 +3,7 @@ module Services
     def initialize(options = {})
       @csv = options[:file]
       @headers = options[:headers] || true
+      @name = options[:name] || 'csv'
     end
 
     def process
@@ -15,7 +16,9 @@ module Services
 
     def response
       {
-        data: entries_list
+        data: entries_list,
+        name: csv_record[:name],
+        id: csv_record[:id]
       }
     end
 
@@ -28,6 +31,10 @@ module Services
       end
   
       list
+    end
+
+    def csv_record
+      ::Services::CsvRegister.new(@name).call
     end
   end
 end

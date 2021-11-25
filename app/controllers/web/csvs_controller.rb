@@ -16,16 +16,10 @@ module Web
     end
 
     def announcements
-      record_list = load_csv[:data]
+      data ||= load_csv
 
-      announcements_records = []
-
-      record_list.each { |row| 
-        parsed_record = ::Services::Announcements::Parser.new(row).call
-        announcements_records.push(parsed_record)
-      }
-
-      announcements_records
+      uploader = ::Services::Announcements::Uploader.new({ record_list: data[:data], csv_id: data[:id]})
+      uploader.call
     end
   end
 end
