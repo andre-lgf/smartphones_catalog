@@ -23,7 +23,7 @@ module Services
     end
 
     def device
-      device_name = csv_hash[:device]
+      device_name = csv_hash[:model]
       
       device = Database::Brands::Device.find_or_create_by(name: device_name, brand_id: brand.id )
     end

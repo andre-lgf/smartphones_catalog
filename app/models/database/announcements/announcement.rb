@@ -5,6 +5,9 @@ module Database
       belongs_to :plan
 
       has_many :csv_announcements
+
+      has_one :device, :through => :device_colors
+      has_one :color, :through => :device_colors
     end
   end
 end

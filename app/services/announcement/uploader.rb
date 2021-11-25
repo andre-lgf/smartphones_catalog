@@ -15,16 +15,17 @@ module Services
       attr_reader :record_list, :csv_id
 
       def announcements
-        record_list.map { |row| register_announcement(row) }
+        record_list.map { |row| 
+          parsed_record = ::Services::Announcements::Parser.new(row).call
+          register_announcement(parsed_record)
+        }
       end
 
       def register_announcement(record)
-        parsed_record = ::Services::Announcements::Parser.new(record).call
-        database_record = Database::Announcements::Announcement.find_or_create_by(parsed_record)
-
+        database_record = Database::Announcements::Announcement.find_or_create_by(record)
         build_csv_announcement(database_record.id) if @csv_id.present?
 
-        parsed_record
+        database_record
       end
 
       def build_csv_announcement(id)

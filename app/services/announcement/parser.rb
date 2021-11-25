@@ -9,8 +9,8 @@ module Services
         {
           plan_id: parse_plan.id,
           device_color_id: parse_device_color.id,
-          amount: csv_hash[:quantity],
-          price: csv_hash[:price]
+          amount: csv_hash[:quantity].to_i,
+          price: csv_hash[:price].to_i
         }.compact
       end
 
