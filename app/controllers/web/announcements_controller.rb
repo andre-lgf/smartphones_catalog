@@ -21,7 +21,7 @@ module Web
     end
 
     def filtered_announcements
-      Database::Announcements::Announcement.joins(:device, :color, :brand).where(parsed_filter)
+      Database::Announcements::Announcement.joins(:device, :color, :csv_announcements).where(parsed_filter)
     end
   end
 end

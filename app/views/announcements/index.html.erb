@@ -1,6 +1,9 @@
 <div class="container h-100 w-100">
   <div class="row h-100 w-100 d-flex flex-column align-items-center justify-content-center">
-    <h1 class="mb-4 mt-4">Welcome! Let's get the party started</h1>
+    <h1 class="mb-2 mt-4">Welcome! Let's get the party started</h1>
+    <% if @csv_filter.present? %>
+      <h3 class="mb-2 mt-2">That's your uploaded data from <%= @csv_filter[:name] %></h3>
+    <% end %>
     <form class="filter_form mb-4 mt-4">
       <%= select("plan", "name", Database::Announcements::Plan.all.collect(&:name), :include_blank => true) %>
       <%= select("color", "name", Database::Announcements::Color.all.collect(&:name), :include_blank => true) %>
