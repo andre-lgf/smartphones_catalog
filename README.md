@@ -4,7 +4,8 @@
   - [Features](#pushpin-features)
 - [Getting Started](#sparkles-getting-started)
   - [Running our app](#pushpin-running-our-app)
-- [Expected CSV](#sparkles-getting-started)
+- [Expected CSV](#pushpin-expected-csv)
+- [API Doc](#pushpin-api-docummentation)
 
 # :sparkles: Introduction
 
