@@ -5,9 +5,6 @@ module Web
       render "csvs/index"
     end
 
-    def create
-    end
-
     def import
       render json: announcements
     end
