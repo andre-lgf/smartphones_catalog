@@ -1,5 +1,7 @@
 module Services
   class CsvImporter
+    TOTAL_COLLUMS = 6
+
     def initialize(options = {})
       @csv = options[:file]
       @headers = options[:headers] || true
@@ -26,7 +28,10 @@ module Services
       list = []
   
       CSV.foreach(@csv, headers: @headers).each do |row|
-        data = row.to_h
+        data = row.to_h.compact
+
+        raise StandardError.new "Wrong CSV format" if data.size != 6
+
         list.push(data.symbolize_keys)
       end
   

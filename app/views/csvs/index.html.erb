@@ -1,12 +1,18 @@
-<h1>Hello once again!</h1>
-
-<%= form_tag import_csvs_path, multipart: true do %>
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text">
-        <%= file_field_tag :file %>
-      </span>
-    </div>
-      <%= submit_tag "Upload Companies", :class => "btn btn-success" %>
+<div class="container h-100 w-100">
+  <div class="row h-100 w-100 d-flex flex-column align-items-center justify-content-center">
+    <h1 class="mb-4 mt-4">Welcome! Let's get the party started</h1>
+    <%= form_tag import_csvs_path, multipart: true do %>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <%= file_field_tag :file %>
+          </span>
+        </div>
+          <%= submit_tag "Upload Companies", :class => "btn btn-success" %>
+      </div>
+    <% end %>
+    <a href="/announcements" class="btn btn-warning mb-4 mt-4">
+      See catalog
+    </a>
   </div>
-<% end %>
+</div>

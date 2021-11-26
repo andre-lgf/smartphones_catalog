@@ -8,7 +8,7 @@ module Services
       def call
         res = {}
         res[:plan_id] = plan.id if fully_param?(:plan)
-        res[:device_colors] = device_colors if (fully_param?(:device) || fully_param?(:color))
+        res[:device_colors] = device_colors if (fully_param?(:brand) || fully_param?(:device) || fully_param?(:color))
 
         res
       end
@@ -29,11 +29,16 @@ module Services
         hash = {}
         hash[:color_id] = color.id if fully_param?(:color)
         hash[:device_id] = device.id if fully_param?(:device)
+        hash[:device_id] = device_by_brand if fully_param?(:brand)
         hash
       end
 
       def device
         Database::Brands::Device.find_by(name: filter[:device][:name])
+      end
+
+      def device_by_brand
+        Database::Brands::Device.where(brand_id: brand.id).pluck(:id)
       end
 
       def color
