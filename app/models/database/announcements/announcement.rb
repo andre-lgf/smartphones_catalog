@@ -6,9 +6,9 @@ module Database
 
       has_many :csv_announcements
 
-      has_one :device, :through => :device_colors, class_name: "::Database::Brands::Device"
-      has_one :color, :through => :device_colors, class_name: "::Database::Announcements::Color"
-      has_one :brand, :through => :device, class_name: "::Database::Brands::Brand"
+      has_one :device, class_name: "::Database::Brands::Device", :through => :device_colors
+      has_one :brand, class_name: "::Database::Brands::Brand", :through => :device
+      has_one :color, :through => :device_colors
     end
   end
 end

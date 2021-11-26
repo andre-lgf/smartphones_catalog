@@ -7,9 +7,8 @@ module Services
 
       def call
         res = {}
-        res[:plan_id] = plan.id if filter[:plan].present?
-        res[:device_colors] = device_colors if filter[:device].present? || filter[:color].present?
-        res[:brand] = brand.id if filter[:brand].present?
+        res[:plan_id] = plan.id if fully_param?(:plan)
+        res[:device_colors] = device_colors if (fully_param?(:device) || fully_param?(:color))
 
         res
       end
@@ -18,14 +17,19 @@ module Services
 
       attr_reader :filter
 
+      def fully_param?(param)
+        filter[param.to_sym].present? && filter[param.to_sym][:name].present?
+      end
+
       def plan
         Database::Announcements::Plan.find_by(name: filter[:plan][:name])
       end
 
       def device_colors
         hash = {}
-        hash[:device_id] = device.id if filter[:device].present?
-        hash[:color_id] = color.id if filter[:color].present?
+        hash[:color_id] = color.id if fully_param?(:color)
+        hash[:device_id] = device.id if fully_param?(:device)
+        hash
       end
 
       def device
