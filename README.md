@@ -56,20 +56,20 @@ Open a terminal window.
 
   `bin/rails server` or `rails s`
 
-### :pushpin: Expected CSV
+# :pushpin: Expected CSV
 
 So, to seed our db you need to provide a certain type of CSV format. You can find it at `input_valid.csv`.
 The collums should be:
 
 | manufacturer |  model          | color        |  carrier_plan_type | quantity    |  price   |
 |--------------|-----------------|--------------|--------------------|-------------|----------|
-|    string    |     string      |    string    |    pre || pos      |     int     |  int     |
+|    string    |     string      |    string    |     pre / pos      |     int     |  int     |
 
-### :pushpin: API Docummentation
+# :pushpin: API Docummentation
 
-### Endpoints - v1
+## Endpoints - v1
 
-#### Announcements
+### Announcements
 
 ```
 /api/announcements/
@@ -82,10 +82,10 @@ Method: GET
 ```
 
 ```
-/api/announcements?:device_color_id&:plan_id&:price&::price
+/api/announcements?:device_color_id&:plan_id&:price&:amount
 Method: POST
 ```
 
-#### Brands
+### Brands
 
 ! WIP !
