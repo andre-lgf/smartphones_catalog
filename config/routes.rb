@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   end
 
   scope module: :web do
+    root :to => redirect('/csvs')
+
     resources :announcements, only: [:index]
 
     resources :csvs, only: [:index, :show] do

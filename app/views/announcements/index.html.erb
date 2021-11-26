@@ -41,5 +41,10 @@
         </tbody>
       </table>
     </div>
+    <% if @csv_filter.present? %>
+      <a href="/announcements" class="btn btn-warning mb-4 mt-4">
+        See all catalog
+      </a>
+    <% end %>
   </div>
 </div>
