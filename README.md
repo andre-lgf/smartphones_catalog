@@ -67,4 +67,25 @@ The collums should be:
 
 ### :pushpin: API Docummentation
 
-## WIP
+### Endpoints - v1
+
+#### Announcements
+
+```
+/api/announcements/
+Method: GET
+```
+
+```
+/api/announcements/:id
+Method: GET
+```
+
+```
+/api/announcements?:device_color_id&:plan_id&:price&::price
+Method: POST
+```
+
+#### Brands
+
+! WIP !

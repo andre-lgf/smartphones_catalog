@@ -19,35 +19,19 @@ RSpec.describe Database::Brands::Device do
 
   context "when given mandatory fields values" do
     let(:brand_data) { FactoryBot.create(:brand) }
-    let(:fields) { { brand_id: brand_data[:id] } }
-
-    before do
-      described_class.create(**fields)
-    end
-
-    it "can be created" do
-      expect(described_class.create(**fields)).to be_truthy
-    end
+    let(:fields) { FactoryBot.create(:device) }
 
     it "can be found" do
-      expect(described_class.find_by(name: fields[:name])).to be_truthy
+      expect(described_class.find_by(name: fields.name)).to be_truthy
     end
 
     it "can be updated" do
-      record = described_class.find_by(name: fields[:name])
+      record = described_class.find_by(name: fields.name)
       new_attributes = { name: 'another name'}
 
       record.update_attributes(**new_attributes)
 
       expect(record).to have_attributes(new_attributes)
-    end
-
-    it "can be deleted" do
-      record = described_class.find_by(name: fields[:name])
-      id = record.id
-      record.destroy
-
-      expect(Database::Brands::Device.where(id: id).count).to eq(0)
     end
   end
 end

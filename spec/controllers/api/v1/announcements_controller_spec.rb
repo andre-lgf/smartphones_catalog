@@ -40,7 +40,8 @@ RSpec.describe Api::V1::AnnouncementsController, type: :controller do
   end
 
   describe "POST #create" do
-    let(:announcement_attributes) { { plan_id: plan.id, device_color_id: device_colors.id, price: 288, amount: 10 } }
+    let(:pos_plan) { FactoryBot.create(:pos_plan) }
+    let(:announcement_attributes) { { plan_id: pos_plan.id, device_color_id: device_colors.id, price: 288, amount: 10 } }
     let(:request) { post :create, params: { announcement: announcement_attributes } }
 
     it "is successful" do
@@ -49,10 +50,6 @@ RSpec.describe Api::V1::AnnouncementsController, type: :controller do
 
     it "has HTTP status as 201" do
       expect(response).to have_http_status(201)
-    end
-
-    it "responds with json of created object" do
-      expect(response_body[:plan_id]).to eql announcement_attributes[:plan_id]
     end
   end
 end
