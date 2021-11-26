@@ -37,9 +37,13 @@ Still a WIP, but works.
 
 ## :pushpin: Clone this repository
 
-`git clone https://github.com/marianasmmattos/smartphones_catalog.git`
+```
+git clone https://github.com/marianasmmattos/smartphones_catalog.git
+```
 
-`cd smartphones_catalog`
+```
+cd smartphones_catalog
+```
 
 ## :pushpin: Running it
 
@@ -47,15 +51,27 @@ Open a terminal window.
 
 1. First, create database
 
-  `rails db:create`
+```
+rails db:create
+```
 
 2. Then, run our migrations so the schema is up to date
 
-  `rails db:migrate`
+```
+rails db:migrate
+```
 
 3. Run our app!
 
-  `bin/rails server` or `rails s`
+```
+bin/rails server
+```
+
+or 
+
+```
+rails s
+```
 
 # :pushpin: Expected CSV
 
