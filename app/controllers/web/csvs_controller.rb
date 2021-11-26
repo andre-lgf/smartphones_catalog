@@ -9,18 +9,18 @@ module Web
     end
 
     def import
-      render json: announcements(params[:file].path)
+      render json: announcements
     end
      
     private
 
-    def load_csv(path)
-      @load_csv = ::Services::CsvImporter.new({ file: path})
+    def load_csv
+      @load_csv = ::Services::CsvImporter.new({ file: params[:file].path, name: params[:file].original_filename })
       @load_csv.process
     end
 
-    def announcements(path)
-      data ||= load_csv(path)
+    def announcements
+      data ||= load_csv
 
       uploader = ::Services::Announcements::Uploader.new({ record_list: data[:data], csv_id: data[:id]})
       uploader.call
