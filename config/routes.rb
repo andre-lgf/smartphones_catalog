@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
   scope module: :web do
     resources :announcements, only: [:index]
-    resources :csvs, only: [:index, :create]
+    resources :csvs, only: [:index, :create] do
+      collection { post :import }
+    end
   end
 end
 

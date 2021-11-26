@@ -25,7 +25,7 @@ module Services
     def entries_list
       list = []
   
-      CSV.parse(@csv, headers: @headers).each do |row|
+      CSV.foreach(@csv, headers: @headers).each do |row|
         data = row.to_h
         list.push(data.symbolize_keys)
       end
