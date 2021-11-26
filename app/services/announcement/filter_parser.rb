@@ -29,8 +29,8 @@ module Services
       def device_colors
         hash = {}
         hash[:color_id] = color.id if fully_param?(:color)
-        hash[:device_id] = device.id if fully_param?(:device)
         hash[:device_id] = device_by_brand if fully_param?(:brand)
+        hash[:device_id] = device.id if fully_param?(:device)
         hash
       end
 
