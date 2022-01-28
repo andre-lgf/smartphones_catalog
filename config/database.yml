@@ -12,7 +12,8 @@ test:
   database: smartphone_catalog_test
 <% if ENV['CI'] %>
   username: root
-  host: 127.0.0.1
+  password: password
+  host: <%= ENV['DB_HOST'] %>
   port: <%= ENV['DB_PORT'] %>
 <% end %>
 
