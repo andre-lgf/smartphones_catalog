@@ -31,7 +31,6 @@ jobs:
         env:
           DB_PORT: 3306
         run: |
-          sudo service mysql start
           bin/rails db:setup
       - name: Run tests
         env:
