@@ -28,7 +28,7 @@ jobs:
       - name: Setup Database
         env:
           RAILS_ENV: test
-      - run: |
+        run: |
          cp config/database.yml.ci config/database.yml
          sudo /etc/init.d/mysql start
       - name: Install dependencies
