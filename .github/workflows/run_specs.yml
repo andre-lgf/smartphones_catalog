@@ -30,15 +30,15 @@ jobs:
       - name: Install dependencies
         run: |
           bundle install
-      - name: Create database
+      - name: Setup MySQL
         env:
           PORT: ${{ job.services.mysql.ports[3306] }}
         run: |
           sudo /etc/init.d/mysql start
           mysql --host ${{ env.DB_HOST }} --port ${{ job.services.mysql.ports[3306] }} -uroot -p${{ env.DB_PASSWORD }} -e "SHOW GRANTS FOR 'root'@'localhost'"
           mysql --host ${{ env.DB_HOST }}--port ${{ job.services.mysql.ports[3306] }} -uroot -p${{ env.DB_PASSWORD }} mysql
-          mysql --host ${{ env.DB_HOST }} -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
-          bin/rails db:setup
+      - name: Create database
+        run:  bin/rails db:setup
       - name: Run tests
         env:
           RAILS_ENV: test
