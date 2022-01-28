@@ -30,6 +30,8 @@ jobs:
           sudo /etc/init.d/mysql start
       - name: Create database
         run: |
+          gem update bundler
+          gem bundle install
           sudo bin/rails db:create
           sudo bin/rails db:migrate
       - name: Run tests
