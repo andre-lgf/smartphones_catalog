@@ -33,10 +33,10 @@ jobs:
           sudo /etc/init.d/mysql start
       - name: Create database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:migrate
+          bin/rails db:create
+          bin/rails db:migrate
       - name: Run tests
         env:
           RAILS_ENV: test
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
-        run: sudo bundler exec rspec spec/*
+        run: rspec spec/*
