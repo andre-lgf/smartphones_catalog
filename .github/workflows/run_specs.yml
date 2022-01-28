@@ -30,8 +30,8 @@ jobs:
           sudo /etc/init.d/mysql start
       - name: Create database
         run: |
-          sudo bundler exec rails db:create
-          sudo bundler exec rails db:migrate
+          sudo rails db:create
+          sudo rails db:migrate
       - name: Run tests
         env:
           RAILS_ENV: test
