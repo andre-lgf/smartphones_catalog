@@ -1,5 +1,7 @@
 env:
   RUBY_VERSION: 2.5.0
+  DB_PORT: 3306
+  DB_HOST: 127.0.0.1
 
 name: Test coverage
 on: [push, pull_request]
@@ -11,10 +13,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_HOST: 127.0.0.1
+          MYSQL_HOST: ${{ env.DB_HOST }}
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
-        - 3306
+        - ${{ env.DB_PORT }}
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v1
@@ -25,6 +27,7 @@ jobs:
       - name: Start mysql
         run: |
           cp config/database.yml.ci config/database.yml
+          mysql -h ${{ env.DB_HOST }} --port ${{ env.DB_PORT }} -u root
           sudo /etc/init.d/mysql start
       - name: Install dependencies
         run: |
