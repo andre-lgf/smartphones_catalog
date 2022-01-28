@@ -31,7 +31,7 @@ jobs:
       - name: Create database
         run: |
           gem update bundler
-          gem bundle install
+          bundle install
           sudo bin/rails db:create
           sudo bin/rails db:migrate
       - name: Run tests
