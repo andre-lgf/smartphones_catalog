@@ -14,9 +14,11 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_HOST: ${{ env.DB_HOST }}
+          MYSQL_USERNAME: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: smartphone_catalog_test
         ports:
-        - 3306
+        - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v1
@@ -24,14 +26,10 @@ jobs:
         with:
           bundler: default
           ruby-version: ${{ env.RUBY_VERSION }}
-      - name: Start mysql
-        run: |
-          cp config/database.yml.ci config/database.yml
-          sudo /etc/init.d/mysql start
-          mysql -h ${{ env.DB_HOST }} --port 3306 -u root
       - name: Install dependencies
         run: |
           bundle install
+          sudo apt-get -yqq install default-libmysqlclient-dev default-mysql-client
       - name: Create database
         run: |
           bin/rails db:setup
