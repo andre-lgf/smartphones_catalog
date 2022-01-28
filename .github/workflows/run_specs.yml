@@ -4,21 +4,20 @@ env:
 name: Test coverage
 on: [push, pull_request]
 jobs: 
-  rspec-test:
+ rspec-test:
     name: RSpec
     runs-on: ubuntu-20.04
     services:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: test
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
-            - '8888:3306'
+        - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v1
-      - run: mysql -h 127.0.0.1 --port 8888 -u root -p password -e 'CREATE DATABASE IF NOT EXISTS test;'
       - uses: ruby/setup-ruby@v1
         with:
           bundler: default
@@ -27,7 +26,6 @@ jobs:
         run: |
           cp config/database.yml.ci config/database.yml
           sudo /etc/init.d/mysql start
-          sudo mysql -u root -p
       - name: Install dependencies
         run: |
           bundle install
