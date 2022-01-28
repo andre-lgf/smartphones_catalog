@@ -5,7 +5,7 @@ env:
   DB_DATABASE: smartphone_catalog_test
   DB_USER: root
   DB_PASSWORD: password
-  DB_PORT: 33306:3306
+  DB_PORT: 3306
   DB_HOST: 127.0.0.1
 
 on: [push, pull_request]
@@ -18,8 +18,12 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: root
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: test
+          MYSQL_ROOT_PASSWORD: password
         ports:
-        - 33306:3306
+        - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v1
@@ -31,6 +35,8 @@ jobs:
         run: |
           bundle install
       - name: Create database
+        env:
+          PORT: ${{ job.services.mysql.ports[3306] }}
         run: |
           sudo /etc/init.d/mysql start
           mysql --host ${{ env.DB_HOST }} -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
