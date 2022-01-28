@@ -25,8 +25,8 @@ jobs:
           bundler-cache: true
       - name: Initialize database
         run: |
-          sudo mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
-          sudo mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot mysql
+          sudo mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -u root -e "SHOW GRANTS FOR 'root'@'localhost'"
+          sudo mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -u root mysql
           sudo /etc/init.d/mysql start
       - name: Create database
         run: |
