@@ -13,11 +13,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_PORT: ${{ env.DB_PORT }}
           MYSQL_HOST: ${{ env.DB_HOST }}
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
-        - ${{ env.MYSQL_PORT }}
+        - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v1
@@ -28,7 +27,7 @@ jobs:
       - name: Start mysql
         run: |
           cp config/database.yml.ci config/database.yml
-          mysql -h ${{ env.DB_HOST }} --port ${{ env.DB_PORT }} -u root
+          mysql -h ${{ env.DB_HOST }} --port 3306 -u root
           sudo /etc/init.d/mysql start
       - name: Install dependencies
         run: |
