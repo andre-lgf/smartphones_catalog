@@ -24,8 +24,8 @@ jobs:
           ruby-version: ${{ env.RUBY_VERSION }}
       - name: Bundle install dependencies
         run: |
-          sudo gem install bundler
-          sudo bundle install
+          gem install bundler
+          bundle install
       - name: Initialize database
         run: |
           sudo mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -u root -e "SHOW GRANTS FOR 'root'@'localhost'"
