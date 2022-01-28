@@ -1,0 +1,39 @@
+env:
+  RUBY_VERSION: 2.7.4
+
+name: Test coverage
+on: [push, pull_request]
+jobs: 
+  rspec-test:
+    name: RSpec
+    runs-on: ubuntu-20.04
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: smartphone_catalog_test
+        ports:
+        - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+      - name: Initialize database
+        run: |
+          sudo mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
+          sudo mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot mysql
+          sudo /etc/init.d/mysql start
+      - name: Create database
+        run: |
+          sudo bundler exec rails db:create
+          sudo bundler exec rails db:migrate
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+        run: sudo bundler exec rspec spec/*
