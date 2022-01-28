@@ -1,17 +1,19 @@
-test:
+default: &default
   adapter: mysql2
   encoding: utf8
   host: 127.0.0.1
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: my_password
-  database: smartphone_catalog_test
 
 development:
-  adapter: mysql2
-  encoding: utf8
-  host: 127.0.0.1
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: my_password
+  <<: *default
+  database: smartphone_catalog_dev
+
+test:
+  <<: *default
   database: smartphone_catalog_test
+
+production:
+  <<: *default
+  database: smartphone_catalog_prod
