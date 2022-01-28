@@ -24,7 +24,7 @@ jobs:
           ruby-version: ${{ env.RUBY_VERSION }}
       - name: Bundle install dependencies
         run: |
-          sudo bundler install
+          sudo gem install bundler
           sudo bundle install
       - name: Initialize database
         run: |
