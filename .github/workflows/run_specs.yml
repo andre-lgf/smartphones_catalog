@@ -29,9 +29,9 @@ jobs:
       - name: Install dependencies
         run: |
           bundle install
-          sudo apt-get -yqq install default-libmysqlclient-dev default-mysql-client
       - name: Create database
         run: |
+          sudo service mysql start
           bin/rails db:setup
       - name: Run tests
         env:
