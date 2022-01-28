@@ -23,9 +23,6 @@ jobs:
         with:
           bundler: default
           ruby-version: 2.5.0
-      - name: Start mysql
-        run: |
-          systemctl start mysql
       - name: Install dependencies
         run: |
           bundle install
