@@ -4,9 +4,6 @@ env:
   RUBY_VERSION: 2.5.0
   DB_PORT: 3306
   DB_HOST: 127.0.0.1
-  MYSQL_USERNAME: root
-  MYSQL_PASSWORD: password
-  MYSQL_ROOT_PASSWORD: password
 
 on: [push, pull_request]
 jobs: 
@@ -20,7 +17,6 @@ jobs:
           MYSQL_USERNAME: root
           MYSQL_PASSWORD: password
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: smartphone_catalog_test
         ports:
         - 3306
@@ -38,7 +34,6 @@ jobs:
         env:
           DB_PORT: 3306
         run: |
-          sudo service mysql start
           bin/rails db:setup
       - name: Run tests
         env:
