@@ -34,6 +34,7 @@ jobs:
       - name: Create database
         run: |
           ruby -v
+          sudo ruby -v
           sudo bin/rails db:create
           bin/rails db:migrate
       - name: Run tests
