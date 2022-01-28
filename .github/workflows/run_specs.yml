@@ -33,7 +33,8 @@ jobs:
           sudo /etc/init.d/mysql start
       - name: Create database
         run: |
-          bin/rails db:create
+          ruby -v
+          sudo bin/rails db:create
           bin/rails db:migrate
       - name: Run tests
         env:
