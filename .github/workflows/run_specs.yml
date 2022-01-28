@@ -1,9 +1,10 @@
+name: CI
+
 env:
   RUBY_VERSION: 2.5.0
   DB_PORT: 3306
   DB_HOST: 127.0.0.1
 
-name: Test coverage
 on: [push, pull_request]
 jobs: 
  rspec-test:
@@ -13,12 +14,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_HOST: ${{ env.DB_HOST }}
-          MYSQL_USERNAME: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: smartphone_catalog_test
         ports:
-        - 3306:3306
+        - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v1
@@ -30,6 +29,8 @@ jobs:
         run: |
           bundle install
       - name: Create database
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
         run: |
           sudo service mysql start
           bin/rails db:setup

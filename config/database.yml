@@ -10,6 +10,10 @@ development:
 test:
   <<: *default
   database: smartphone_catalog_test
+<% if ENV['CI'] %>
+  host: 127.0.0.1
+  port: <%= ENV['DB_PORT'] %>
+<% end %>
 
 production:
   <<: *default
