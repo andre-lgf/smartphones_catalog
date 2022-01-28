@@ -22,7 +22,10 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
-          bundler-cache: true
+      - name: Bundle install dependencies
+        run: |
+          sudo bundler install
+          sudo bundle install
       - name: Initialize database
         run: |
           sudo mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -u root -e "SHOW GRANTS FOR 'root'@'localhost'"
@@ -30,8 +33,8 @@ jobs:
           sudo /etc/init.d/mysql start
       - name: Create database
         run: |
-          bundle exec rake db:create
-          bundle exec rake db:migrate
+          sudo bundle exec rake db:create
+          sudo bundle exec rake db:migrate
       - name: Run tests
         env:
           RAILS_ENV: test
