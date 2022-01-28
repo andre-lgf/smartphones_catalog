@@ -25,7 +25,8 @@ jobs:
           ruby-version: 2.5.0
       - name: Start mysql
         run: |
-          mysql
+          sudo service mysql stop
+          mysql start
       - name: Install dependencies
         run: |
           bundle install
