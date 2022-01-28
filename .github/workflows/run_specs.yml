@@ -26,16 +26,9 @@ jobs:
       - name: Install dependencies
         run: |
           bundle install
-      - name: Initialize database
-        run: |
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -u root -e "SHOW GRANTS FOR 'root'@'localhost'"
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -u root mysql
-          sudo /etc/init.d/mysql start
       - name: Create database
         run: |
-          ruby -v
-          sudo ruby -v
-          sudo bin/rails db:create
+          bin/rails db:create
           bin/rails db:migrate
       - name: Run tests
         env:
