@@ -33,7 +33,7 @@ jobs:
       - name: Create database
         run: |
           sudo /etc/init.d/mysql start
-          mysql --host ${{ env.DB_HOST }} --port ${{ env.DDB_PORT }} -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+          mysql --host ${{ env.DB_HOST }} -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
           bin/rails db:setup
       - name: Run tests
         env:
