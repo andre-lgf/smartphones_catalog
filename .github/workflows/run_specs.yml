@@ -13,7 +13,7 @@ jobs:
         env:
           MYSQL_HOST: 127.0.0.1
           MYSQL_USER: root
-          MYSQL_PASSWORD: root
+          MYSQL_PASSWORD: my_password
           MYSQL_DATABASE: smartphone_catalog_test
         ports:
         - 3306
@@ -23,20 +23,17 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler: default
-          ruby-version: 2.5.0
-      - name: Setup Database
-        env:
-          RAILS_ENV: test
+          ruby-version: ${{ env.RUBY_VERSION }}
+      - name: Start mysql
         run: |
-         cp config/database.yml.ci config/database.yml
-         sudo /etc/init.d/mysql start
+          cp config/database.yml.ci config/database.yml
+          sudo /etc/init.d/mysql start
       - name: Install dependencies
         run: |
           bundle install
       - name: Create database
         run: |
-          bundle exec rails db:create
-          bundle exec rails db:migrate
+          bin/rails db:setup
       - name: Run tests
         env:
           RAILS_ENV: test

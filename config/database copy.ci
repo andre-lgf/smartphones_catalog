@@ -4,5 +4,5 @@ test:
   host: 127.0.0.1
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: root
+  password: my_password
   database: smartphone_catalog_test
